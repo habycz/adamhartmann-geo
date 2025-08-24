@@ -119,7 +119,19 @@
 }
 
 /* Smooth scrolling */
-html:focus-within { scroll-behavior: smooth; }
+html, body, #__next {
+  height: 100%;
+}
+
+html {
+  scroll-behavior: auto; /* let Lenis take control */
+  overscroll-behavior-y: none;
+}
+
+body {
+  overflow-x: hidden; /* prevent sideways scroll only */
+  overflow-y: auto; /* always allow vertical scrolling */
+}
 
 /* --- CLS guards & animation helpers ------------------------------------ */
 @layer utilities {
@@ -129,9 +141,43 @@ html:focus-within { scroll-behavior: smooth; }
   /* Lock line-height tightly for badges/chips to avoid baseline shifts */
   .lh-tight { line-height: 1; }
 
+  .scroll-padding { scroll-padding-top: 6rem; }
+
   /* Prevent reflow from wrapping during entry animations */
   .no-wrap { white-space: nowrap; }
 
   /* Provide a minimal fixed-height helper for compact chips */
   .h-chip { height: 2.25rem; } /* ~ h-9 */
+}
+
+
+
+
+/* --- Featured Work custom styles --- */
+.featured-grid {
+  @apply grid gap-6 sm:grid-cols-2 lg:grid-cols-5;
+}
+
+.featured-card {
+  @apply relative aspect-square rounded-3xl bg-white/5 border border-white/10 backdrop-blur-xl flex items-center justify-center overflow-hidden transition;
+}
+
+.featured-card:hover {
+  @apply scale-105 shadow-[0_0_32px_rgba(255,255,255,0.2)];
+}
+
+.featured-card-content {
+  @apply text-white/80 text-lg font-medium;
+}
+
+/* Optional animated gradient background inside each card */
+.featured-card::before {
+  content: "";
+  @apply absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-white/5;
+  animation: cardGlow 6s ease-in-out infinite alternate;
+}
+
+@keyframes cardGlow {
+  0% { transform: scale(1) rotate(0deg); opacity: 0.5; }
+  100% { transform: scale(1.2) rotate(10deg); opacity: 0.9; }
 }

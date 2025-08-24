@@ -62,12 +62,14 @@ export default function HeroGeometric({
   title2 = "Seamless Digital Reality",
   subtitle = "Helping B2B teams bring ideas to life with Microsoft Power Pages expertise.",
   showLogo = false,
+  badgeClassName = "",
 }: {
   badge?: string
   title1?: string
   title2?: string
   subtitle?: string
   showLogo?: boolean
+  badgeClassName?: string
 }) {
   const [copied, setCopied] = useState(false)
 
@@ -76,7 +78,7 @@ export default function HeroGeometric({
     visible: (i: number) => ({
       opacity: 1,
       y: 0,
-      transition: { duration: 1, delay: 0.4 + i * 0.15, ease: [0.25, 0.4, 0.25, 1] },
+      transition: { duration: 1, delay: 0.4 + i * 0.15, ease: "easeOut" },
     }),
   }
 
@@ -91,7 +93,14 @@ export default function HeroGeometric({
   }
 
   return (
-    <div className="relative min-h-screen w-full flex items-center justify-center overflow-hidden">
+    <motion.div
+      className="relative min-h-screen w-full flex items-center justify-center overflow-hidden"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 1 }}
+      key="hero"
+    >
       {/* subtle global tint */}
       {/* <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/[0.05] via-transparent to-rose-500/[0.05] blur-3xl" /> */}
 
@@ -105,7 +114,10 @@ export default function HeroGeometric({
             initial="hidden"
             animate="visible"
             href="#"
-            className="inline-flex items-center gap-2 h-9 px-4 leading-none rounded-full bg-white/[0.04] border border-white/[0.1] shadow-[0_8px_32px_rgba(255,255,255,0.06)] mb-10 md:mb-14 hover:bg-white/[0.07] transition transform-gpu will-change-transform whitespace-nowrap"
+            className={cn(
+              "inline-flex items-center gap-2 h-9 px-4 leading-none rounded-full bg-white/[0.04] border border-white/[0.1] shadow-[0_8px_32px_rgba(255,255,255,0.06)] mb-10 md:mb-14 hover:bg-white/[0.07] transition transform-gpu will-change-transform whitespace-nowrap",
+              badgeClassName
+            )}
             style={{
               transform: "translateZ(0)",
               WebkitFontSmoothing: "antialiased",
@@ -198,6 +210,6 @@ export default function HeroGeometric({
 
       {/* soft top vignette only – avoids bottom seam */}
       <div className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-black/30 to-transparent" />
-    </div>
+    </motion.div>
   )
 }
