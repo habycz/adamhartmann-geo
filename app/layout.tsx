@@ -4,6 +4,7 @@ import type { Metadata } from 'next'
 import { GeistSans } from 'geist/font/sans'
 import { GeistMono } from 'geist/font/mono'
 import './globals.css'
+import React from "react";
 
 export const metadata: Metadata = {
   title: 'v0 App',
@@ -17,7 +18,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="dark">
       <head>
         <style>{`
 html {
@@ -27,10 +28,13 @@ html {
 }
         `}</style>
       </head>
-      <body className="bg-[#030303] text-white antialiased">
+      <body role="document" className="bg-[#030303] text-white antialiased">
         <GeometricBackground />
         <NavGlass />
         <main className="relative z-10">{children}</main>
+        {/* Global toast mount & a11y live region */}
+        <div id="toast-root" className="fixed right-4 bottom-4 z-[9999] pointer-events-none" />
+        <div id="a11y-status" aria-live="polite" aria-atomic="true" className="sr-only" />
       </body>
     </html>
   )

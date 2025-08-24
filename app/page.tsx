@@ -3,6 +3,7 @@
 import HeroGeometric from "../components/kokonutui/hero-geometric";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { useEffect } from "react";
 
 // Lightweight in-file reveal helper (avoids extra component wiring)
 function Reveal({
@@ -128,14 +129,22 @@ export default function Home() {
   return (
     <>
       {/* HERO */}
-      <HeroGeometric
-        badge="Crafting Swiss-grade Power Pages"
-        title1="Turning Vision into"
-        title2="Seamless Digital Reality"
-      />
+      <div className="relative -mt-[30px] md:-mt-[30px] lg:-mt-[50px] space-y-2">
+        <HeroGeometric
+          badge="Crafting Swiss-grade Power Pages"
+          title1="Turning Vision into"
+          title2="Seamless Digital Reality"
+          badgeClassName="shadow-[0_0_8px_rgba(255,255,255,0.7)] animate-pulse"
+        />
+        {/* Soft fade to avoid visible seam at the bottom of the hero */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 -bottom-10 h-24 bg-gradient-to-b from-transparent via-black/10 to-black/0"
+        />
+      </div>
 
       {/* MAIN CONTENT (scrollable) */}
-      <div className="relative z-10">
+      <div className="relative z-10 -mt-20 md:-mt-24">
         {/* Capabilities */}
         <section className="container mx-auto max-w-6xl px-6 pt-16 md:pt-24">
           <Reveal>
